@@ -14,8 +14,11 @@ angular.module('issueManagerApp')
         /** @type {Array.<issue>} */
         issues : '=',
 
+        /** @type {string} */
+        header: '@',
+
         onIssueEdit : '&',
-        onIssueDelete : '&',
+        onIssueDelete : '&'
       },
       templateUrl: 'scripts/directives/imissuelist.html',
       controller: 'IssueListCtrl',
