@@ -1,0 +1,9 @@
+<ul>
+    <li ng-repeat="issue in issueListCtrl.issues">
+        {{issue.name}}
+        <button class="btn btn-success btn-sm"
+                ng-click="issueListCtrl.editIssue(issue);"><span class="glyphicon glyphicon-edit"></span></button>
+        <button class="btn btn-danger btn-sm"
+                ng-click="issueListCtrl.deleteIssue(issue)"><span class="glyphicon glyphicon-minus"></span></button>
+    </li>
+</ul>

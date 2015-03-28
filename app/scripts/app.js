@@ -2,14 +2,14 @@
 
 /**
  * @ngdoc overview
- * @name issueManager
+ * @name issueManagerApp
  * @description
- * # issueManager
+ * # issueManagerApp
  *
  * Main module of the application.
  */
 angular
-  .module('issueManager', [
+  .module('issueManagerApp', [
     'ngAnimate',
     'ngAria',
     'ngCookies',
