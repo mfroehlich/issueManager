@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * @ngdoc directive
  * @name issueManagerApp.directive:imIssueDetails
@@ -8,10 +6,12 @@
  */
 angular.module('issueManagerApp')
   .directive('imIssueDetails', function () {
+    'use strict';
+
     return {
       restrict: 'E',
       scope: {
-        /** @type {issue} */
+        /** @type {Issue} */
         issue: '='
       },
       templateUrl: 'scripts/directives/imissuedetails.html',
@@ -20,5 +20,5 @@ angular.module('issueManagerApp')
       bindToController: true
     };
   })
-  .controller('IssueDetailsCtrl', function() {
+  .controller('IssueDetailsCtrl', function () {
   });

@@ -1,5 +1,7 @@
 <div>
-    <h2>Create new issue</h2>
+    <h2>Create new issue
+        <span ng-show="!!issueCreationCtrl.parentIssue"> for parent {{issueCreationCtrl.parentIssue.name}}</span>
+    </h2>
 
     <form role="form" class="form-horizontal" name="issuecreationform"
           novalidate

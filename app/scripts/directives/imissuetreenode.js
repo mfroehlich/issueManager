@@ -1,33 +1,31 @@
+'use strict';
+
 /**
  * @ngdoc directive
- * @name issueManagerApp.directive:imIssueList
+ * @name issueManagerApp.directive:imIssueTree
  * @description
- * # imIssueList
+ * # imIssueTree
  */
 angular.module('issueManagerApp')
-  .directive('imIssueList', function () {
-    'use strict';
-
+  .directive('imIssueTreeNode', function () {
     return {
       restrict: 'E',
       scope: {
-        /** @type {Array.<issue>} */
-        issues: '=',
-
-        /** @type {string} */
-        header: '@',
+        /** @type {Issue} */
+        issue: '=',
 
         onIssueCreate: '&',
         onIssueEdit: '&',
         onIssueDelete: '&'
       },
-      templateUrl: 'scripts/directives/imissuelist.html',
-      controller: 'IssueListCtrl',
-      controllerAs: 'issueListCtrl',
+      templateUrl: 'scripts/directives/imissuetreenode.html',
+      controller: 'IssueTreeNodeCtrl',
+      controllerAs: 'issueTreeNodeCtrl',
       bindToController: true
     };
   })
-  .controller('IssueListCtrl', function () {
+  .controller('IssueTreeNodeCtrl', function () {
+
     var self = this;
 
     this.createIssue = function (issue) {
@@ -41,4 +39,5 @@ angular.module('issueManagerApp')
     this.deleteIssue = function (issue) {
       self.onIssueDelete({selectedIssue: issue});
     };
+
   });

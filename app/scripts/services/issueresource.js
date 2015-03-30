@@ -1,35 +1,55 @@
-angular.module('issueManagerApp').service('issueResource', function () {
+angular.module('issueManagerApp')
+  .service('issueResource', function (uuid) {
+    'use strict';
 
-  /**
-   * @param {string} name
-   * @param {string} description
-   */
-  var addIssue = function(name, description) {
-    var issue = new Issue(name, description);
-    model.issues.push(issue);
-  };
+    /**
+     * @param {Issue} parentIssue
+     * @param {string} name
+     * @param {string} description
+     * @returns {Issue} the created issue.
+     */
+    var addIssue = function (parentIssue, name, description) {
+      var issueId = uuid.generateId();
 
-  /**
-   * @param {issue} issue
-   */
-  var deleteIssue = function (issue) {
-    var index = model.issues.indexOf(issue);
-    if (index > -1) {
-      model.issues.splice(index, 1);
-    }
-  };
+      if (!parentIssue) {
+        parentIssue = rootIssue;
+      }
 
-  var model = {
-    /** @type {Array.<Issue>}*/
-    issues: [
-      new Issue('Issue1', 'Beschreibung1'),
-      new Issue('Issue2', 'Beschreibung2'),
-      new Issue('Issue3', 'Beschreibung3')
-    ],
+      var issue = new Issue(parentIssue, issueId, name);
+      issue.setDescription(description);
 
-    addIssue : addIssue,
-    deleteIssue: deleteIssue
-  };
+      model.issues.push(issue);
 
-  return model;
-});
+      return issue;
+    };
+
+    /**
+     * @param {Issue} issue
+     */
+    var deleteIssue = function (issue) {
+      var index = model.issues.indexOf(issue);
+      if (index > -1) {
+        model.issues.splice(index, 1);
+      }
+    };
+
+    var model = {
+      /** @type {Issue} */
+      root: null,
+
+      /** @type {Array.<Issue>}*/
+      issues: [],
+
+      addIssue: addIssue,
+      deleteIssue: deleteIssue
+    };
+
+    var rootIssue = addIssue(null, 'ROOT', 'Description of root');
+    addIssue(rootIssue, 'Issue 1', 'Description of issue 1');
+    addIssue(rootIssue, 'Issue 2', 'Description of issue 2');
+    addIssue(rootIssue, 'Issue 3', 'Description of issue 3');
+
+    model.root = rootIssue;
+
+    return model;
+  });

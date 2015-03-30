@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * @ngdoc directive
  * @name issueManagerApp.directive:imIssueCreation
@@ -8,8 +6,14 @@
  */
 angular.module('issueManagerApp')
   .directive('imIssueCreation', function () {
+    'use strict';
+
     return {
       restrict: 'E',
+      scope: {
+        /** @type {Issue} */
+        parentIssue: '='
+      },
       templateUrl: 'scripts/directives/imissuecreation.html',
       controller: 'IssueCreationCtrl',
       controllerAs: 'issueCreationCtrl',
@@ -21,7 +25,7 @@ angular.module('issueManagerApp')
     var self = this;
 
     this.createIssue = function () {
-      issueResource.addIssue(this.issue.name, this.issue.description);
+      issueResource.addIssue(self.parentIssue, self.issue.name, self.issue.description);
       resetForm();
     };
 

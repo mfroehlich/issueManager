@@ -1,6 +1,55 @@
 <h2>Issue details</h2>
-<span>{{issueDetailsCtrl.issue.id}}</span><br>
-<span>{{issueDetailsCtrl.issue.name}}</span><br>
-<span>{{issueDetailsCtrl.issue.description}}</span><br>
-<span>{{issueDetailsCtrl.issue.creationTime | date}}</span><br>
-<span>{{issueDetailsCtrl.issue.editTime | date}}</span><br>
+<form role="form" class="form-horizontal" name="issuedetailsform"
+      novalidate>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">Name:</label>
+
+        <div class="col-sm-10">
+            <input class="form-control" ng-readonly="true"
+                   ng-model="issueDetailsCtrl.issue.name"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">Description:</label>
+
+        <div class="col-sm-10">
+            <textarea class="form-control" ng-readonly="true"
+                      ng-model="issueDetailsCtrl.issue.description"></textarea>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">Parent:</label>
+
+        <div class="col-sm-10">
+            <input class="form-control" ng-readonly="true"
+                   ng-model="issueDetailsCtrl.issue.parentIssue.name"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">Children:</label>
+
+        <div class="col-sm-10">
+            <ul>
+                <li ng-repeat="child in issueDetailsCtrl.issue.childIssues">{{child.name}}</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-2 control-label">Created:</label>
+
+        <div class="col-sm-10">
+            <input class="form-control" ng-readonly="true"
+                   ng-model="issueDetailsCtrl.issue.creationTime"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">Edited:</label>
+
+        <div class="col-sm-10">
+            <input class="form-control" ng-readonly="true"
+                   ng-model="issueDetailsCtrl.issue.editTime"/>
+        </div>
+    </div>
+
+</form>
