@@ -10,9 +10,7 @@
 <ul>
     <im-issue-tree-node
             issue="mainCtrl.rootIssue"
-            on-issue-edit="mainCtrl.openIssueDetails(selectedIssue)"
-            on-issue-create="mainCtrl.openIssueCreationDialog(selectedIssue)"
-            on-issue-delete="mainCtrl.deleteIssue(selectedIssue)">
+            issue-notifier="mainCtrl.issueNotifier">
     </im-issue-tree-node>
 </ul>
 

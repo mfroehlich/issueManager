@@ -18,8 +18,6 @@ angular.module('issueManagerApp')
       var issue = new Issue(parentIssue, issueId, name);
       issue.setDescription(description);
 
-      model.issues.push(issue);
-
       return issue;
     };
 
@@ -27,18 +25,15 @@ angular.module('issueManagerApp')
      * @param {Issue} issue
      */
     var deleteIssue = function (issue) {
-      var index = model.issues.indexOf(issue);
-      if (index > -1) {
-        model.issues.splice(index, 1);
+      var parent = issue.getParent();
+      if (parent) {
+        parent.removeChild(issue);
       }
     };
 
     var model = {
       /** @type {Issue} */
       root: null,
-
-      /** @type {Array.<Issue>}*/
-      issues: [],
 
       addIssue: addIssue,
       deleteIssue: deleteIssue

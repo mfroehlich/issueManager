@@ -14,9 +14,7 @@ angular.module('issueManagerApp')
         /** @type {Issue} */
         issue: '=',
 
-        onIssueCreate: '&',
-        onIssueEdit: '&',
-        onIssueDelete: '&'
+        issueNotifier: '='
       },
       templateUrl: 'scripts/directives/imissuetreenode.html',
       controller: 'IssueTreeNodeCtrl',
@@ -29,15 +27,14 @@ angular.module('issueManagerApp')
     var self = this;
 
     this.createIssue = function (issue) {
-      self.onIssueCreate({selectedIssue: issue});
+      self.issueNotifier.onIssueCreate(issue);
     };
 
     this.editIssue = function (issue) {
-      self.onIssueEdit({selectedIssue: issue});
+      self.issueNotifier.onIssueEdit(issue);
     };
 
     this.deleteIssue = function (issue) {
-      self.onIssueDelete({selectedIssue: issue});
+      self.issueNotifier.onIssueDelete(issue);
     };
-
   });

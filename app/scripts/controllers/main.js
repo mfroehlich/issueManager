@@ -10,23 +10,26 @@ angular.module('issueManagerApp')
     this.detailsDialogVisible = false;
     this.creationDialogVisible = false;
 
-    this.openIssueDetails = function (issue) {
-      self.detailsDialogVisible = true;
-      self.selectedIssue = issue;
+    this.issueNotifier = {
+      onIssueCreate: function (parentIssue) {
+        self.selectedIssue = parentIssue;
+        self.creationDialogVisible = true;
+      },
+      onIssueEdit: function (issue) {
+        self.detailsDialogVisible = true;
+        self.selectedIssue = issue;
+      },
+      onIssueDelete: function (issue) {
+        issueResource.deleteIssue(issue);
+      }
     };
+
     this.closeIssueDetails = function () {
       self.detailsDialogVisible = false;
     };
 
-    this.openIssueCreationDialog = function (parentIssue) {
-      self.selectedIssue = parentIssue;
-      self.creationDialogVisible = true;
-    };
-    this.closeIssueCreationDialog = function() {
+    this.closeIssueCreationDialog = function () {
       self.creationDialogVisible = false;
     };
 
-    this.deleteIssue = function (issue) {
-      issueResource.deleteIssue(issue);
-    };
   });
