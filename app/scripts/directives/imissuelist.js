@@ -28,6 +28,8 @@ angular.module('issueManagerApp')
     };
   })
   .controller('IssueListCtrl', function () {
+    'use strict';
+
     var self = this;
 
     this.createIssue = function (issue) {

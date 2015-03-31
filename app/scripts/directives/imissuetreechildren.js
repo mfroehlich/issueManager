@@ -16,11 +16,11 @@ angular.module('issueManagerApp')
 
         issueNotifier: '='
       },
-      template: "<ul></ul>",
+      template: '<ul></ul>',
       bindToController: true,
-      link: function (scope, element, attrs) {
+      link: function (scope, element) {
         if (angular.isArray(scope.issue.childIssues)) {
-          element.append("<im-issue-tree-node ng-repeat='child in issue.childIssues' issue='child' issue-notifier='issueNotifier'></im-issue-tree-node>")
+          element.append('<im-issue-tree-node ng-repeat="child in issue.childIssues" issue="child" issue-notifier="issueNotifier"></im-issue-tree-node>');
           $compile(element.contents())(scope);
         }
       }

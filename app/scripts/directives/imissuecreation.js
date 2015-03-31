@@ -11,7 +11,11 @@ angular.module('issueManagerApp')
     return {
       restrict: 'E',
       scope: {
-        /** @type {Issue} */
+        /**
+         * Das Issue, für das ein neues Kind-Issue erstellt werden soll.
+         * Das erzeugte Issue bekommt parentIssue als parent gesetzt.
+         * @type {Issue}
+         */
         parentIssue: '='
       },
       templateUrl: 'scripts/directives/imissuecreation.html',
@@ -21,14 +25,21 @@ angular.module('issueManagerApp')
     };
   })
   .controller('IssueCreationCtrl', function(issueResource) {
+    'use strict';
 
     var self = this;
 
+    /**
+     * Erzeugt ein neues Issue aus den Formulareingaben und setzt parentIssue als parent.
+     */
     this.createIssue = function () {
       issueResource.addIssue(self.parentIssue, self.issue.name, self.issue.description);
       resetForm();
     };
 
+    /**
+     * Setzt die Benutzereingaben zurück.
+     */
     var resetForm = function () {
       self.issue = {
         name: '',
@@ -37,5 +48,4 @@ angular.module('issueManagerApp')
     };
 
     resetForm();
-
   });

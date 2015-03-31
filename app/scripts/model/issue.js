@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  *
  * @param {Issue} parentIssue
@@ -6,7 +8,6 @@
  * @constructor
  */
 function Issue(parentIssue, id, name) {
-  'use strict';
 
   /** {type {uuid} */
   this.id = id;

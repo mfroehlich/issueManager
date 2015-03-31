@@ -1,4 +1,3 @@
-'use strict';
 
 /**
  * @ngdoc directive
@@ -8,6 +7,8 @@
  */
 angular.module('issueManagerApp')
   .directive('imIssueTreeNode', function () {
+    'use strict';
+
     return {
       restrict: 'E',
       scope: {
@@ -23,8 +24,19 @@ angular.module('issueManagerApp')
     };
   })
   .controller('IssueTreeNodeCtrl', function () {
+    'use strict';
 
     var self = this;
+
+    this.contextMenuVisible = false;
+    this.toggleContextMenuVisibility = function() {
+      this.contextMenuVisible = !this.contextMenuVisible;
+    };
+
+    this.childrenVisible = false;
+    this.toggleChildrenVisibility = function() {
+      this.childrenVisible = !this.childrenVisible;
+    };
 
     this.createIssue = function (issue) {
       self.issueNotifier.onIssueCreate(issue);
