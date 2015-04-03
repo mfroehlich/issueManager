@@ -1,4 +1,3 @@
-
 /**
  * @ngdoc directive
  * @name issueManagerApp.directive:imIssueTree
@@ -28,25 +27,40 @@ angular.module('issueManagerApp')
 
     var self = this;
 
+    this.contextMenuButtonVisible = false;
     this.contextMenuVisible = false;
-    this.toggleContextMenuVisibility = function() {
-      this.contextMenuVisible = !this.contextMenuVisible;
+    this.childrenVisible = false;
+
+    this.toggleChildrenVisibility = function () {
+      if (self.issue.hasChildren()) {
+        self.childrenVisible = !self.childrenVisible;
+      }
     };
 
-    this.childrenVisible = false;
-    this.toggleChildrenVisibility = function() {
-      this.childrenVisible = !this.childrenVisible;
+    this.getCollapseIconClass = function () {
+      var className = 'glyphicon ';
+      if (self.childrenVisible === true) {
+        className += self.issue.hasChildren() ? 'glyphicon-folder-open' : 'glyphicon-leaf';
+      }
+      else {
+        className += self.issue.hasChildren() ? 'glyphicon-folder-close' : 'glyphicon-leaf';
+      }
+      return className;
     };
 
     this.createIssue = function (issue) {
       self.issueNotifier.onIssueCreate(issue);
+      this.childrenVisible = true;
+      this.contextMenuVisible = false;
     };
 
     this.editIssue = function (issue) {
       self.issueNotifier.onIssueEdit(issue);
+      this.contextMenuVisible = false;
     };
 
     this.deleteIssue = function (issue) {
       self.issueNotifier.onIssueDelete(issue);
+      this.contextMenuVisible = false;
     };
   });

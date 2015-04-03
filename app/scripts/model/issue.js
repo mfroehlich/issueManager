@@ -80,6 +80,10 @@ Issue.prototype.addChild = function(child) {
   }
 };
 
+Issue.prototype.hasChildren = function() {
+  return this.childIssues.length > 0;
+};
+
 /**
  * @param {string} description
  */
