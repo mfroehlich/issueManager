@@ -63,20 +63,20 @@ angular.module('issueManagerApp')
     this.createNode = function (node) {
       self.nodeNotifier.onNodeCreate(node);
       this.childrenVisible = true;
-      this.contextMenuVisible = false;
     };
 
     this.editNode = function (node) {
       self.nodeNotifier.onNodeEdit(node);
-      this.contextMenuVisible = false;
     };
 
     /**
      * @param {TreeNode} node
      */
     this.deleteNode = function (node) {
-      node.getParentNode().removeChild(node);
-      self.nodeNotifier.onNodeDelete(node);
-      this.contextMenuVisible = false;
+      var parentNode = node.getParentNode();
+      if (parentNode) {
+        parentNode.removeChild(node);
+        self.nodeNotifier.onNodeDelete(node);
+      }
     };
   });

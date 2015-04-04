@@ -24,7 +24,6 @@ angular.module('issueManagerApp')
           .then(function (issue) {
             self.selectedIssue = issue;
           });
-        self.creationDialogVisible = true;
         self.detailsDialogVisible = true;
       },
       onNodeDelete: function (selectedNode) {
