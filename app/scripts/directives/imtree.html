@@ -1,0 +1,32 @@
+<li style="list-style-type: none">
+    <div ng-mouseover="treeCtrl.contextMenuButtonVisible = true"
+          ng-mouseleave="treeCtrl.contextMenuButtonVisible = false; treeCtrl.contextMenuVisible = false">
+
+        <div>
+            <span ng-class="treeCtrl.getCollapseIconClass()"></span>&nbsp;
+            <span ng-bind="treeCtrl.node.name"
+                  ng-click="treeCtrl.toggleChildrenVisibility()"></span>
+            <span class="glyphicon glyphicon-circle-arrow-down"
+                  ng-show="treeCtrl.contextMenuButtonVisible"
+                  im-click="treeCtrl.contextMenuVisible = true"></span>
+        </div>
+
+        <div ng-show="!!treeCtrl.contextMenuVisible"
+             ng-mouseleave="treeCtrl.contextMenuVisible = false">
+            <button class="btn btn-success btn-sm"
+                    ng-click="treeCtrl.createNode(treeCtrl.node);"><span
+                    class="glyphicon glyphicon-plus"></span></button>
+            <button class="btn btn-success btn-sm"
+                    ng-click="treeCtrl.editNode(treeCtrl.node);"><span
+                    class="glyphicon glyphicon-edit"></span></button>
+            <button class="btn btn-danger btn-sm"
+                    ng-click="treeCtrl.deleteNode(treeCtrl.node)"><span
+                    class="glyphicon glyphicon-minus"></span></button>
+        </div>
+    </div>
+
+    <ul ng-show="!!treeCtrl.childrenVisible">
+        <im-tree-children node="treeCtrl.node" node-notifier="treeCtrl.nodeNotifier">
+        </im-tree-children>
+    </ul>
+</li>

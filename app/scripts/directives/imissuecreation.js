@@ -16,7 +16,9 @@ angular.module('issueManagerApp')
          * Das erzeugte Issue bekommt parentIssue als parent gesetzt.
          * @type {Issue}
          */
-        parentIssue: '='
+        parentIssue: '=',
+
+        creationNotifier: '='
       },
       templateUrl: 'scripts/directives/imissuecreation.html',
       controller: 'IssueCreationCtrl',
@@ -33,7 +35,8 @@ angular.module('issueManagerApp')
      * Erzeugt ein neues Issue aus den Formulareingaben und setzt parentIssue als parent.
      */
     this.createIssue = function () {
-      issueResource.addIssue(self.parentIssue, self.issue.name, self.issue.description);
+      var issue = issueResource.addIssue(self.parentIssue, self.issue.name, self.issue.description);
+      self.creationNotifier.onIssueCreate(issue);
       resetForm();
     };
 

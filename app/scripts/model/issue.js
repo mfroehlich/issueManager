@@ -2,12 +2,12 @@
 
 /**
  *
- * @param {Issue} parentIssue
+ * @param {uuid} parentIssueId
  * @param {uuid} id
  * @param {string} name
  * @constructor
  */
-function Issue(parentIssue, id, name) {
+function Issue(parentIssueId, id, name) {
 
   /** {type {uuid} */
   this.id = id;
@@ -15,11 +15,11 @@ function Issue(parentIssue, id, name) {
   /** @type {string} */
   this.name = name;
 
-  /** @type {Issue} */
-  this.parentIssue = parentIssue;
+  /** @type {uuid} */
+  this.parentIssueId = parentIssueId;
 
-  /** @type {Array.<issue>} */
-  this.childIssues = [];
+  /** @type {Array.<uuid>} */
+  this.childIssuesIds = [];
 
   /** @type {string} */
   this.description = '';
@@ -29,64 +29,71 @@ function Issue(parentIssue, id, name) {
 
   /** @type {Date} */
   this.editTime = this.creationTime;
-
-  if (parentIssue) {
-    parentIssue.addChild(this);
-  }
 }
 
 /**
- * @param {Issue} newParent
+ * @returns {uuid}
  */
-Issue.prototype.setParent = function(newParent) {
-  var oldParent = this.getParent();
-  if (oldParent !== newParent) {
-    this.parentIssue = newParent;
-    newParent.addChild(this);
-    if (oldParent) {
-      oldParent.removeChild(this);
-    }
-  }
+Issue.prototype.getId = function() {
+  return this.id;
 };
-
 /**
- *
- * @returns {Issue}
+ * @param {uuid} parentIssueId
  */
-Issue.prototype.getParent = function() {
-  return this.parentIssue;
+Issue.prototype.setParentIssueId = function(parentIssueId) {
+  this.parentIssueId = parentIssueId;
 };
-
-/**
- *
- * @param {Issue} child
- */
-Issue.prototype.removeChild = function(child) {
-  var index = this.childIssues.indexOf(child);
-  if (index > -1) {
-    this.childIssues.splice(index, 1);
-  }
-};
-
-/**
- *
- * @param {Issue} child
- */
-Issue.prototype.addChild = function(child) {
-  var index = this.childIssues.indexOf(child);
-  if (index < 0) {
-    this.childIssues.push(child);
-    child.setParent(this);
-  }
-};
-
-Issue.prototype.hasChildren = function() {
-  return this.childIssues.length > 0;
-};
-
 /**
  * @param {string} description
  */
 Issue.prototype.setDescription = function (description) {
   this.description = description;
+};
+Issue.prototype.getName = function() {
+  return this.name;
+};
+
+/**
+ *
+ * @returns {uuid}
+ */
+Issue.prototype.getParentIssueId = function() {
+  return this.parentIssueId;
+};
+
+/**
+ *
+ * @param {uuid} childIssueId
+ */
+Issue.prototype.removeChildIssueId = function(childIssueId) {
+  var index = this.childIssuesIds.indexOf(childIssueId);
+  if (index > -1) {
+    this.childIssuesIds.splice(index, 1);
+  }
+};
+
+/**
+ *
+ * @param {uuid} childIssueId
+ */
+Issue.prototype.addChildIssueId = function(childIssueId) {
+  var index = this.childIssuesIds.indexOf(childIssueId);
+  if (index < 0) {
+    this.childIssuesIds.push(childIssueId);
+  }
+};
+
+/**
+ * @returns {Array.<uuid>}
+ */
+Issue.prototype.getChildIssueIds = function() {
+  return this.childIssuesIds;
+};
+
+/**
+ *
+ * @returns {boolean}
+ */
+Issue.prototype.hasChildren = function() {
+  return this.childIssuesIds.length > 0;
 };

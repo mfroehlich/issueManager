@@ -3,24 +3,45 @@ angular.module('issueManagerApp')
     'use strict';
 
     var self = this;
-    this.rootIssue = issueResource.root;
+    var rootId = issueResource.root.getId();
+    this.root = new TreeNode(null, rootId);
 
     this.selectedIssue = null;
 
     this.detailsDialogVisible = false;
     this.creationDialogVisible = false;
 
-    this.issueNotifier = {
-      onIssueCreate: function (parentIssue) {
-        self.selectedIssue = parentIssue;
+    this.nodeNotifier = {
+      onNodeCreate: function (parentNode) {
+        issueResource.getIssueById(parentNode.getId())
+          .then(function (issue) {
+            self.selectedIssue = issue;
+          });
         self.creationDialogVisible = true;
       },
-      onIssueEdit: function (issue) {
+      onNodeEdit: function (selectedNode) {
+        issueResource.getIssueById(selectedNode.getId())
+          .then(function (issue) {
+            self.selectedIssue = issue;
+          });
+        self.creationDialogVisible = true;
         self.detailsDialogVisible = true;
-        self.selectedIssue = issue;
       },
-      onIssueDelete: function (issue) {
-        issueResource.deleteIssue(issue);
+      onNodeDelete: function (selectedNode) {
+        issueResource.deleteIssueById(selectedNode.getId());
+      }
+    };
+
+    this.creationNotifier = {
+      onIssueCreate: function (issue) {
+        /** @type {TreeNode} */
+        var node = self.root.getNodeById(issue.getParentIssueId());
+        if (node) {
+          issueResource.getIssueById(issue.getParentIssueId())
+            .then(function (parentIssue) {
+              node.updateChildren(parentIssue.getChildIssueIds());
+            });
+        }
       }
     };
 

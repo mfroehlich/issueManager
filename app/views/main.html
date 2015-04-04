@@ -1,23 +1,15 @@
-<!--<im-issue-list-->
-<!--header="Issue list"-->
-<!--issues="mainCtrl.issueModel.issues"-->
-<!--on-issue-edit="mainCtrl.openIssueDetails(selectedIssue)"-->
-<!--on-issue-create="mainCtrl.openIssueCreationDialog(selectedIssue)"-->
-<!--on-issue-delete="mainCtrl.deleteIssue(selectedIssue)">-->
-<!--</im-issue-list>-->
-
 <h2>Issue tree</h2>
 <ul>
-    <im-issue-tree-node
-            issue="mainCtrl.rootIssue"
-            issue-notifier="mainCtrl.issueNotifier">
-    </im-issue-tree-node>
+    <im-tree node="mainCtrl.root"
+             node-notifier="mainCtrl.nodeNotifier">
+    </im-tree>
 </ul>
 
 <div ng-show="mainCtrl.creationDialogVisible">
     <im-close-button on-click="mainCtrl.closeIssueCreationDialog()"></im-close-button>
     <im-issue-creation
-            parent-issue="mainCtrl.selectedIssue">
+            parent-issue="mainCtrl.selectedIssue"
+            creation-notifier="mainCtrl.creationNotifier">
     </im-issue-creation>
 </div>
 
@@ -27,4 +19,3 @@
             issue="mainCtrl.selectedIssue">
     </im-issue-details>
 </div>
-

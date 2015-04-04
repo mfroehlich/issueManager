@@ -1,6 +1,8 @@
 angular.module('issueManagerApp')
-  .service('issueResource', function (uuid) {
+  .service('issueResource', function ($q, uuid) {
     'use strict';
+
+    var model;
 
     /**
      * @param {Issue} parentIssue
@@ -11,32 +13,49 @@ angular.module('issueManagerApp')
     var addIssue = function (parentIssue, name, description) {
       var issueId = uuid.generateId();
 
-      if (!parentIssue) {
-        parentIssue = rootIssue;
+      var parentIssueId = parentIssue ? parentIssue.getId() : null;
+      var issue = new Issue(parentIssueId, issueId, name);
+      issue.setDescription(description);
+
+      if (parentIssue) {
+        parentIssue.addChildIssueId(issueId);
       }
 
-      var issue = new Issue(parentIssue, issueId, name);
-      issue.setDescription(description);
+      model.issues[issueId] = issue;
 
       return issue;
     };
 
-    /**
-     * @param {Issue} issue
-     */
-    var deleteIssue = function (issue) {
-      var parent = issue.getParent();
-      if (parent) {
-        parent.removeChild(issue);
-      }
+    var getIssueById = function (issueId) {
+      var deferred = $q.defer();
+      deferred.resolve(model.issues[issueId]);
+      return deferred.promise;
     };
 
-    var model = {
+    /**
+     * @param {uuid} issueId
+     */
+    var deleteIssueById = function (issueId) {
+      var issue = model.issues[issueId];
+      var parentId = issue.getParentIssueId();
+      model.getIssueById(parentId)
+        .then(function (parentIssue) {
+          parentIssue.removeChildIssueId(issueId);
+        });
+
+      delete model.issues[issueId];
+    };
+
+    model = {
       /** @type {Issue} */
       root: null,
 
+      /** @type {Object.<uuid, Issue>} */
+      issues: {},
+
       addIssue: addIssue,
-      deleteIssue: deleteIssue
+      deleteIssueById: deleteIssueById,
+      getIssueById: getIssueById
     };
 
     var rootIssue = addIssue(null, 'ROOT', 'Description of root');
