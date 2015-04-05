@@ -26,6 +26,14 @@ angular.module('issueManagerApp')
       return issue;
     };
 
+    /**
+     * @param {Issue} issue
+     */
+    var updateIssue = function (issue) {
+      issue.setEditTime(new Date());
+      model.issues[issue.getId()] = issue;
+    };
+
     var getIssueById = function (issueId) {
       var deferred = $q.defer();
       deferred.resolve(model.issues[issueId]);
@@ -54,6 +62,7 @@ angular.module('issueManagerApp')
       issues: {},
 
       addIssue: addIssue,
+      updateIssue: updateIssue,
       deleteIssueById: deleteIssueById,
       getIssueById: getIssueById
     };

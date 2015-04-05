@@ -16,6 +16,7 @@
 <div ng-show="mainCtrl.detailsDialogVisible">
     <im-close-button on-click="mainCtrl.closeIssueDetails()"></im-close-button>
     <im-issue-details
-            issue="mainCtrl.selectedIssue">
+            issue="mainCtrl.selectedIssue"
+            edit-notifier="mainCtrl.editNotifier">
     </im-issue-details>
 </div>

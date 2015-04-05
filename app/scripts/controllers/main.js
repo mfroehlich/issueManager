@@ -32,7 +32,8 @@ angular.module('issueManagerApp')
     };
 
     this.creationNotifier = {
-      onIssueCreate: function (issue) {
+      onIssueCreate: /** @param {Issue} issue */
+        function (issue) {
         /** @type {TreeNode} */
         var node = self.root.getNodeById(issue.getParentIssueId());
         if (node) {
@@ -40,6 +41,17 @@ angular.module('issueManagerApp')
             .then(function (parentIssue) {
               node.updateChildren(parentIssue.getChildIssueIds());
             });
+        }
+      }
+    };
+
+    this.editNotifier = {
+      onIssueEdit: /** @param {Issue} issue */
+        function (issue) {
+        /** @type {TreeNode} */
+        var node = self.root.getNodeById(issue.getId());
+        if (node) {
+          node.setName(issue.getName());
         }
       }
     };

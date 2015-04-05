@@ -12,7 +12,9 @@ angular.module('issueManagerApp')
       restrict: 'E',
       scope: {
         /** @type {Issue} */
-        issue: '='
+        issue: '=',
+
+        editNotifier: '='
       },
       templateUrl: 'scripts/directives/imissuedetails.html',
       controller: 'IssueDetailsCtrl',
@@ -20,5 +22,12 @@ angular.module('issueManagerApp')
       bindToController: true
     };
   })
-  .controller('IssueDetailsCtrl', function () {
+  .controller('IssueDetailsCtrl', function ($scope, $window, issueResource) {
+    var self = this;
+
+    this.saveIssue = function () {
+      var issue = self.issue;
+      issueResource.updateIssue(issue);
+      self.editNotifier.onIssueEdit(issue);
+    };
   });
