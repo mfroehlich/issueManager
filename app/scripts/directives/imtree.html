@@ -3,17 +3,15 @@
          ng-mouseleave="treeCtrl.contextMenuVisible = false">
 
         <div>
-            <span ng-class="treeCtrl.getCollapseIconClass()"></span>&nbsp;
+            <span ng-class="treeCtrl.getCollapseIconClass()"
+                  ng-click="treeCtrl.toggleChildrenVisibility()"></span>&nbsp;
             <span ng-bind="treeCtrl.node.name"
-                  ng-click="treeCtrl.toggleChildrenVisibility()"></span>
+                  ng-click="treeCtrl.editNode(treeCtrl.node);"></span>
 
             <span class="glyphicon glyphicon-plus"
                   ng-show="!!treeCtrl.contextMenuVisible"
                   ng-click="treeCtrl.createNode(treeCtrl.node);"></span>
-            <span class="glyphicon glyphicon-edit"
-                  ng-show="!!treeCtrl.contextMenuVisible"
-                  ng-click="treeCtrl.editNode(treeCtrl.node);"></span>
-            <span class="glyphicon glyphicon-minus"
+            <span class="glyphicon glyphicon-remove"
                   ng-show="!!treeCtrl.contextMenuVisible"
                   ng-click="treeCtrl.deleteNode(treeCtrl.node)"></span>
         </div>
