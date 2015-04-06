@@ -1,5 +1,5 @@
 angular.module('issueManagerApp')
-  .controller('MainCtrl', function (issueResource) {
+  .controller('MainCtrl', function ($modal, issueResource) {
     'use strict';
 
     var self = this;
@@ -9,29 +9,8 @@ angular.module('issueManagerApp')
     this.selectedIssue = null;
 
     this.detailsDialogVisible = false;
-    this.creationDialogVisible = false;
 
-    this.nodeNotifier = {
-      onNodeCreate: function (parentNode) {
-        issueResource.getIssueById(parentNode.getId())
-          .then(function (issue) {
-            self.selectedIssue = issue;
-          });
-        self.creationDialogVisible = true;
-      },
-      onNodeEdit: function (selectedNode) {
-        issueResource.getIssueById(selectedNode.getId())
-          .then(function (issue) {
-            self.selectedIssue = issue;
-          });
-        self.detailsDialogVisible = true;
-      },
-      onNodeDelete: function (selectedNode) {
-        issueResource.deleteIssueById(selectedNode.getId());
-      }
-    };
-
-    this.creationNotifier = {
+    var creationNotifier = {
       onIssueCreate: /** @param {Issue} issue */
         function (issue) {
         /** @type {TreeNode} */
@@ -42,6 +21,24 @@ angular.module('issueManagerApp')
               node.updateChildren(parentIssue.getChildIssueIds());
             });
         }
+      }
+    };
+
+    this.nodeNotifier = {
+      onNodeCreate: /** @param {TreeNode} parentNode */
+        function (parentNode) {
+        var parentId = parentNode.getId();
+        openCreateIssueDialog(parentId);
+      },
+      onNodeEdit: function (selectedNode) {
+        issueResource.getIssueById(selectedNode.getId())
+          .then(function (issue) {
+            self.selectedIssue = issue;
+          });
+        self.detailsDialogVisible = true;
+      },
+      onNodeDelete: function (selectedNode) {
+        issueResource.deleteIssueById(selectedNode.getId());
       }
     };
 
@@ -56,12 +53,24 @@ angular.module('issueManagerApp')
       }
     };
 
+    var openCreateIssueDialog = function(parentId) {
+      var modalInstance = $modal.open({
+        templateUrl: 'views/issuecreationdialog.html',
+        controller: 'IssueCreationDialogCtrl',
+        controllerAs: 'issueCreationDialogCtrl',
+        size: 'lg',
+        resolve: {
+          parentIssue : function() {
+            return issueResource.getIssueById(parentId);
+          },
+          creationNotifier: function() {
+            return creationNotifier;
+          }
+        }
+      })
+    };
+
     this.closeIssueDetails = function () {
       self.detailsDialogVisible = false;
     };
-
-    this.closeIssueCreationDialog = function () {
-      self.creationDialogVisible = false;
-    };
-
   });

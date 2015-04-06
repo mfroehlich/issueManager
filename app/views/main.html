@@ -5,14 +5,6 @@
     </im-tree>
 </ul>
 
-<div ng-show="mainCtrl.creationDialogVisible">
-    <im-close-button on-click="mainCtrl.closeIssueCreationDialog()"></im-close-button>
-    <im-issue-creation
-            parent-issue="mainCtrl.selectedIssue"
-            creation-notifier="mainCtrl.creationNotifier">
-    </im-issue-creation>
-</div>
-
 <div ng-show="mainCtrl.detailsDialogVisible">
     <im-close-button on-click="mainCtrl.closeIssueDetails()"></im-close-button>
     <im-issue-details
